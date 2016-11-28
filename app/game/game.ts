@@ -9,7 +9,7 @@ export interface IComponent {
 
 export class Game{
      
-    public static camera;
+    public static camera:THREE.Camera;
     public static scene;
     public static renderer;
         
@@ -20,9 +20,9 @@ export class Game{
 
         //Camera
         let aspect = window.innerWidth / window.innerHeight;
-        let d = 10;
+        let d = 50;
         this.camera = new THREE.OrthographicCamera( - d * aspect, d * aspect, d, - d, 1, 1000 );
-        this.camera.position.set( 20, 20, 20 ); // all components equal
+        this.camera.position.set( 400, 400, 400 ); // all components equal
         this.camera.lookAt( this.scene.position ); // or the origin
 
 
@@ -31,7 +31,7 @@ export class Game{
 
         // light
         let light = new THREE.HemisphereLight( 0xc2f1ee, 0x0065b0, 1 ); // soft white light
-        light.position.set(-200, 100, 100);
+        light.position.set(-500, 100, 100);
         this.scene.add( light );
 
         //Render

@@ -1,8 +1,12 @@
 import {Game}  from './game/game';
 import {Api} from './api/api'
+
 import CubicGrid from './elements/cubic-grid';
 import Grid from './elements/grid';
+
 import Cloud from './resources/cloud/cloud';
+
+import FirTree from './resources/tree/fir-tree';
 
 
 // var dataRequest = {
@@ -30,6 +34,7 @@ window.onload = function() {
     Game.init();
 
     Game.component(Cloud);
+    Game.component(FirTree);
 // Game.component(Grid);
     Game.component(CubicGrid);
 

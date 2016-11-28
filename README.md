@@ -2,15 +2,16 @@
 TS, threejs(TS), webpack bundle.
 
 | TODO                                  | Status        |
-| -------------                         |:-------------:| 
-| async load module with requireJS      | false         |
-| Fix error with WebVR test             | false         |
+| -------------                         |:-------------:|
+| Fix error with ts                     | true          |
+| async load module                     | false         |
+| migrate with GEOJson Service          | false         |
 
 
 #How to start?
 ```
   npm install
-  
-  webpack
+
+  npm start
 ```
 

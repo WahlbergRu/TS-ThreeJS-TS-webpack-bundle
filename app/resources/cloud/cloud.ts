@@ -15,9 +15,6 @@ export default class Cloud implements IComponent {
             circleIndex = 0,
             cloudSize = 3,
             cloudWide = 3;
-
-        let obj = THREE;
-        console.log(obj);
         //Make array of cloud
         // cloud =  Array.from({length: cloudWide},
         //         ()=> Array.from({length: cloudSize},
@@ -57,9 +54,6 @@ export default class Cloud implements IComponent {
             let buffer:number = 5;
             let elem:THREE.Mesh = new THREE.Mesh( geometry, material )
 
-            //TODO: merge плохо работает с отрицательными координатами
-            elem.position.y = 10;
-            // new THREE.Mesh( geometry, material )
             if (i !== 1 || j !== 1){
                 circleIndex++;
                 if (circleIndex<4){
@@ -83,7 +77,13 @@ export default class Cloud implements IComponent {
             cloudMatrix.merge(elem.geometry, elem.matrix);
         }
 
-        let elem = new THREE.Mesh( cloudMatrix, material )
+        let elem = new THREE.Mesh( cloudMatrix, material );
+        elem.scale.x = 5;
+        elem.scale.y = 5;
+        elem.scale.z = 5;
+        // elem.position.x=-20;
+        elem.position.y=75;
+        // elem.position.z=-20;
         Game.scene.add(elem);
 
 	}

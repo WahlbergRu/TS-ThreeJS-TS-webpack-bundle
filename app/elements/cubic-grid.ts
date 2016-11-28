@@ -10,15 +10,16 @@ export default class CubicGrid implements IComponent {
         var geometry,
             material,
             cube,
-            mapSize = 70;
+            mapSize = 30;
 
         for (let i = 0, lenX = mapSize; i < lenX; i++) {
             for (let j = 0, lenY = mapSize; j < lenY; j++) {
-                geometry = new THREE.BoxGeometry(1, 1, 1);
+                geometry = new THREE.BoxBufferGeometry(10, 0, 10);
                 material = new THREE.MeshLambertMaterial({});
                 cube = new THREE.Mesh(geometry, material);
-                cube.position.x = i-mapSize/2;
-                cube.position.y = j-mapSize/2;
+                cube.position.x = i*10-mapSize/2*10;
+                cube.position.y = -10;
+                cube.position.z = j*10-mapSize/2*10;
                 Game.scene.add( cube );
             }
         }

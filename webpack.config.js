@@ -21,5 +21,6 @@ module.exports = {
                 loader: 'ts-loader'
             }
         ]
-    }
+    },
+    watch: true
 }
