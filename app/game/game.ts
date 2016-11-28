@@ -1,7 +1,5 @@
 import * as THREE from 'three';
 
-
-
 export interface IComponentClass {
     new (): IComponent;
 }
@@ -10,11 +8,11 @@ export interface IComponent {
 }
 
 export class Game{
-
+     
     public static camera;
     public static scene;
     public static renderer;
-
+        
     public static init(){
 
         //Scene
@@ -27,25 +25,26 @@ export class Game{
         this.camera.position.set( 20, 20, 20 ); // all components equal
         this.camera.lookAt( this.scene.position ); // or the origin
 
+
+        // let gridHelper = new THREE.GridHelper( 10, 10, 0x000000, 0x000000 );
+        // this.scene.add( gridHelper );
+
         // light
-        var light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 ); // soft white light
+        let light = new THREE.HemisphereLight( 0xc2f1ee, 0x0065b0, 1 ); // soft white light
+        light.position.set(-200, 100, 100);
         this.scene.add( light );
 
         //Render
         this.renderer = new THREE.WebGLRenderer();
         this.renderer.setSize( window.innerWidth, window.innerHeight ) ;
 
+        this.renderer.shadowMap.enabled = true;
+        this.renderer.shadowMap.renderReverseSided = false;
 
-        var self = this;
-        window.onload = function() {
-            console.log(document)
-            console.log(document.body)
-            console.log(self.renderer.domElement)
-            document.body.appendChild( self.renderer.domElement ) ;
-            animation();
-        }
-    }
-
+        document.body.appendChild( this.renderer.domElement ) ;
+        animation();   
+    } 
+    
     private static components = {};
     public static component(Component: IComponentClass) {
         var component = new Component();
@@ -53,16 +52,16 @@ export class Game{
         // get the name of the class
         var cstr = Component.prototype.constructor.toString();
         var key = cstr.substring(9, cstr.indexOf('('));
-
+        
         this.components[key] = component;
-    }
-
+    } 
+    
     public static update(){
         for (var prop in this.components){
             var component = this.components[prop];
             component.update();
         }
-        this.renderer.render( this.scene, this.camera);
+        this.renderer.render( this.scene, this.camera);   
     }
 }
 
@@ -71,3 +70,4 @@ function animation() {
     window.requestAnimationFrame( animation );
     Game.update();
 }
+

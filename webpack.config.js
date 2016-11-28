@@ -18,7 +18,7 @@ module.exports = {
         loaders: [
             {
                 test: /\.ts?$/,
-                loader: 'webpack-typescript?target=ES5'
+                loader: 'ts-loader'
             }
         ]
     }
