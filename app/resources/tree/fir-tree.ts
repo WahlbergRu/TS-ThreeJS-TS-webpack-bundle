@@ -22,41 +22,38 @@ export default class FirTree implements IComponent {
         elem = new THREE.Mesh( geometry, material );
         Game.scene.add(elem);
 
-        for (let iter = 1; iter > 0; iter--) {
+        material = new THREE.MeshPhongMaterial( {
+            color: 0x2aa126,
+            shading: THREE.FlatShading
+        } );
+
+        geometry = new THREE.ConeGeometry( 3, 3, 4, 1, true, Math.PI/4 );
+        elem = new THREE.Mesh( geometry, material );
+
+        for (let iter = 5; iter > 0; iter--) {
 
 
             let buffer:number = 5;
 
+            elem.scale.x=0.9**iter;
+            elem.scale.y=0.9**iter;
+            elem.scale.z=0.9**iter;
+
+
             elem.position.x = 0;
-            elem.position.y = 0;
+            elem.position.y = iter*1.5;
             elem.position.z = 0;
-            //TODO: merge плохо работает с отрицательными координатами
-            // elem.position.y = 10;
-            // // new THREE.Mesh( geometry, material )
-            // if (i !== 1 || j !== 1){
-            //     circleIndex++;
-            //     if (circleIndex<4){
-            //         elem.position.x = buffer + cloud[1][1] + Math.cos(circleIndex*Math.PI/4);
-            //         elem.position.z = buffer + cloud[1][1] + Math.sin(circleIndex*Math.PI/4);
-            //     } else {
-            //         elem.position.x = buffer + cloud[1][1] + Math.cos(circleIndex*Math.PI/4);
-            //         elem.position.z = buffer + cloud[1][1] + Math.sin(circleIndex*Math.PI/4);
-            //     }
-            // } else {
-            //     elem.position.x = buffer + cloud[1][1] ;
-            //     elem.position.z = buffer + cloud[1][1] ;
-            // }
 
             let random = Math.random();
-            // elem.rotateX(random *Math.PI/24);
+            // elem.rotateZZ(Math.PI/4);
             // elem.rotateY(random *Math.PI/24);
-
 
             elem.updateMatrix(); // as needed
             componentObjectMatrix.merge(elem.geometry, elem.matrix);
         }
 
-        elem = new THREE.Mesh( componentObjectMatrix, material )
+        elem = new THREE.Mesh( componentObjectMatrix, material );
+        Game.scene.add(elem);
 
 	}
     
