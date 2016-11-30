@@ -29,8 +29,9 @@ export class Game{
         // let gridHelper = new THREE.GridHelper( 10, 10, 0x000000, 0x000000 );
         // this.scene.add( gridHelper );
 
+        let light:THREE.HemisphereLight;
         // light
-        let light = new THREE.HemisphereLight( 0xc2f1ee, 0x0065b0, 1 ); // soft white light
+        light = new THREE.HemisphereLight( 0xECEAFF, 0x88DD78, 1 ); // soft white light
         light.position.set(-500, 100, 100);
         this.scene.add( light );
 

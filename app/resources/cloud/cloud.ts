@@ -33,7 +33,7 @@ export default class Cloud implements IComponent {
         var cloudMatrix:THREE.Geometry|THREE.DodecahedronGeometry|THREE.IcosahedronGeometry = new THREE.Geometry();
 
         material = new THREE.MeshPhongMaterial( {
-            color: 0xc2f1ee,
+            color: 0x555,
             shading: THREE.FlatShading
         } );
 

@@ -8,7 +8,7 @@ export default class FirTree implements IComponent {
 	constructor() {
 
         var geometry:THREE.Geometry,
-            material,
+            material:THREE.Material,
             elem:THREE.Mesh,
             componentObject ;
 
@@ -18,7 +18,7 @@ export default class FirTree implements IComponent {
             color: 0x7c6439,
             shading: THREE.FlatShading
         } );
-        geometry = new THREE.BoxGeometry( 2, 4, 2 );
+        geometry = new THREE.BoxGeometry( 1, 4, 1 );
         elem = new THREE.Mesh( geometry, material );
         Game.scene.add(elem);
 
@@ -30,18 +30,17 @@ export default class FirTree implements IComponent {
         geometry = new THREE.ConeGeometry( 3, 3, 4, 1, true, Math.PI/4 );
         elem = new THREE.Mesh( geometry, material );
 
-        for (let iter = 5; iter > 0; iter--) {
+        for (let iter = 3; iter > 0; iter--) {
 
+            let memoIter = 0.9**iter;
 
-            let buffer:number = 5;
-
-            elem.scale.x=0.9**iter;
-            elem.scale.y=0.9**iter;
-            elem.scale.z=0.9**iter;
+            elem.scale.x=memoIter;
+            elem.scale.y=memoIter;
+            elem.scale.z=memoIter;
 
 
             elem.position.x = 0;
-            elem.position.y = iter*1.5;
+            elem.position.y = iter*2*memoIter;
             elem.position.z = 0;
 
             let random = Math.random();
@@ -53,7 +52,13 @@ export default class FirTree implements IComponent {
         }
 
         elem = new THREE.Mesh( componentObjectMatrix, material );
+
+        let edges:THREE.EdgesHelper;
+        edges = new THREE.EdgesHelper(elem, 0x0a541a);
+        edges.material.linewidth = 24;
+
         Game.scene.add(elem);
+        Game.scene.add(edges);
 
 	}
     
