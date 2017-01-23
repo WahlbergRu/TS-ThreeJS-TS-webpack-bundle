@@ -1,30 +1,47 @@
 {
   "name": "webpack-typescript-threejs",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "compile SPA for game seed. Support typescript.",
   "main": "index.js",
   "scripts": {
-    "start": "webpack",
+    "start": "npm run server-dev-watch",
+    "server-watch": "cross-env NODE_ENV=development webpack --config webpack.config.js --progress --colors --watch",
+    "server-dev": "set NODE_ENV=development webpack-dev-server --progress --colors",
+    "server-dev-watch": "set NODE_ENV=development webpack-dev-server --progress --colors --watch",
+    "build-dev": "set NODE_ENV=development webpack-dev-server --progress",
+    "build-server": "set NODE_ENV=development webpack --progress --colors",
+    "build-production": "set NODE_ENV=production webpack --progress",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Allen Wahlberg",
+  "license": "MIT",
   "devDependencies": {
     "@types/es6-shim": "^0.31.32",
     "@types/node": "^6.0.51",
     "@types/three": "0.0.26",
+    "cross-env": "^3.1.4",
     "es6-shim": "^0.35.1",
     "exports-loader": "^0.6.3",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "html-loader": "^0.4.4",
+    "html-webpack-plugin": "^2.26.0",
+    "image-webpack-loader": "^3.1.0",
     "imports-loader": "^0.6.5",
+    "localforage": "^1.4.3",
+    "lodash": "^4.17.4",
+    "manifest-revision-webpack-plugin": "^0.3.0",
+    "node-sass": "^4.3.0",
     "path": "^0.12.7",
+    "sass-loader": "^4.1.1",
     "ts-loader": "^1.2.2",
     "typescript": "^2.0.10",
-    "webpack": "^1.13.3",
+    "webgl-obj-loader": "^0.1.1",
+    "webpack": "^1.14.0",
+    "webpack-dev-server": "^1.16.2",
     "webpack-typescript": "^0.5.6"
   },
   "dependencies": {
     "three": "^0.81.0",
-    "localforage": "^1.4.3",
-    "webgl-obj-loader": "^0.1.1"
+    "underscore": "^1.8.3"
   }
 }

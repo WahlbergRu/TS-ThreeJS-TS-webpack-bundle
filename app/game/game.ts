@@ -8,22 +8,27 @@ export interface IComponent {
 }
 
 export class Game{
+
+    public settings:any = {};
      
     public static camera:THREE.Camera;
     public static scene;
     public static renderer;
         
-    public static init(){
+    public static init(settings){
+        //Set settings parameters
+        this.settings = settings;
 
         //Scene
         this.scene = new THREE.Scene()
 
         //Camera
         let aspect = window.innerWidth / window.innerHeight;
-        let d = 50;
+        let d = this.settings.camera.d;
         this.camera = new THREE.OrthographicCamera( - d * aspect, d * aspect, d, - d, 1, 1000 );
-        this.camera.position.set( 400, 400, 400 ); // all components equal
+        this.camera.position.set( d * 8, d * 8, d * 8 ); // all components equal
         this.camera.lookAt( this.scene.position ); // or the origin
+
 
 
         // let gridHelper = new THREE.GridHelper( 10, 10, 0x000000, 0x000000 );
@@ -31,8 +36,8 @@ export class Game{
 
         let light:THREE.HemisphereLight;
         // light
-        light = new THREE.HemisphereLight( 0xECEAFF, 0x88DD78, 1 ); // soft white light
-        light.position.set(-500, 100, 100);
+        light = new THREE.HemisphereLight( 0x0000ff, 0x00ff00, 0.6 );
+        light.position.set(-d * 10, d * 2, d * 2 );
         this.scene.add( light );
 
         //Render
@@ -48,12 +53,16 @@ export class Game{
     
     private static components = {};
     public static component(Component: IComponentClass) {
-        var component = new Component();
+        var component:any = new Component();
 
+        console.log(component);
         // get the name of the class
         var cstr = Component.prototype.constructor.toString();
         var key = cstr.substring(9, cstr.indexOf('('));
-        
+        if (component.add){
+            component.add(this.settings);
+        }
+
         this.components[key] = component;
     } 
     

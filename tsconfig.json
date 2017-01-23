@@ -4,7 +4,9 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "module": "commonjs",
-    "types":["es6-shim"],
+    "types":[
+      "es6-shim"
+    ],
     "sourceMap": true,
     "target": "es5",
     "typeRoots": [ "node_modules/@types/" ]
