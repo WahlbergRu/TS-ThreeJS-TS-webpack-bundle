@@ -7,7 +7,7 @@
     "start": "npm run server-dev-watch",
     "server-watch": "cross-env NODE_ENV=development webpack --config webpack.config.js --progress --colors --watch --display-error-details",
     "server-dev": "cross-env NODE_ENV=development webpack-dev-server --progress --colors",
-    "server-dev-watch": "cross-env NODE_ENV=development webpack-dev-server --progress --colors --watch",
+    "server-dev-watch": "cross-env NODE_ENV=development webpack-dev-server --progress --colors --watch  --display-error-details",
     "build-dev": "cross-env NODE_ENV=development webpack-dev-server --progress",
     "build-server": "cross-env NODE_ENV=development webpack --progress --colors",
     "build-production": "cross-env NODE_ENV=production webpack --progress",
