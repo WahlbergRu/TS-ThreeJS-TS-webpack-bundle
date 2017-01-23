@@ -2,12 +2,11 @@ import {Game}  from './game/game';
 import {Api} from './api/api'
 
 import CubicGrid from './elements/cubic-grid';
-import Grid from './elements/grid';
+import Grid      from './elements/grid';
 
-var css     = require("!raw-loader!sass-loader!./file.scss");
+var css = require("!raw-loader!sass-loader!./index.scss");
 
-
-console.log(css)
+console.log(css);
 function getHeightData(img) {
     let canvas = document.createElement( 'canvas' );
     canvas.width = 128;
@@ -49,7 +48,7 @@ img.onload = function () {
     // Что это за хуйня? Оо  - PLANE
 
 };
-img.src = require("./assets/heightmap/heightmap_128.jpg");
+img.src = require("./assets/images/heightmap/heightmap_128.jpg");
 
 
 // import Cloud from './resources/cloud/cloud';

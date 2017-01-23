@@ -7,18 +7,17 @@ var path        = require('path');
 var webpack     = require('webpack');
 var Manifest    = require('manifest-revision-webpack-plugin');
 var TextPlugin  = require('extract-text-webpack-plugin');
-var HtmlPlugin  = require('html-webpack-plugin');
+var HtmlWebpackPlugin  = require('html-webpack-plugin');
 
 module.exports = function(_path) {
     //define local variables
-    console.log(_path)
     var dependencies  = Object.keys(require(_path + '/package').dependencies);
     var rootAssetPath = _path + 'app';
 
     return {
         // точки входа
         entry: {
-            application: _path + '/app/manifest.js',
+            application: _path + '/app/manifest.ts',
             vendors: dependencies
         },
 
@@ -48,6 +47,12 @@ module.exports = function(_path) {
         // Настройка загрузчиков, они выполняют роль обработчика исходного файла в конечный
         module: {
             loaders: [
+                {
+                    // Row loader to load html as inline templates.
+                    test: /\.html$/,
+                    loader: 'raw',
+                    exclude: '/node_modules/'
+                },
                 { test: /\.jade$/, loader: 'jade-loader' },
                 { test: /\.(css|ttf|eot|woff|woff2|png|ico|jpg|jpeg|gif|svg)$/i, loaders: ['file?context=' + rootAssetPath + '&name=assets/static/[ext]/[name].[hash].[ext]'] },
                 { test: /\.styl$/, loader: TextPlugin.extract('style-loader', 'css-loader!autoprefixer-loader?browsers=last 5 version!stylus-loader') }
@@ -61,12 +66,13 @@ module.exports = function(_path) {
             new Manifest(path.join(_path + '/config', 'manifest.json'), {
                 rootAssetPath: rootAssetPath
             }),
-            // Этот файл будет являться "корневым" index.html
-            new HtmlPlugin({
-                title: 'Test APP',
+            // Этот файл будет являться "корневым" index.template.html
+            new HtmlWebpackPlugin({
+                title: 'ThreeJS, TS - webpack bundle',
                 chunks: ['application', 'vendors'],
-                filename: 'index.html',
-                template: path.join(_path, 'app', 'index.html')
+                template: path.join(_path, 'app', 'index.ejs'),
+                baseHref: '/',
+                inject: 'body',
             })
         ]
     }
