@@ -12,7 +12,7 @@ export default class FirTree implements IComponent {
             elem:THREE.Mesh,
             componentObject ;
 
-        var componentObjectMatrix:THREE.Geometry|THREE.DodecahedronGeometry|THREE.IcosahedronGeometry = new THREE.Geometry();
+        var componentObjectMatrix:THREE.Geometry|THREE.DodecahedronGeometry|THREE.IcosahedronGeometry|any = new THREE.Geometry();
 
         material = new THREE.MeshPhongMaterial( {
             color: 0x7c6439,
@@ -53,7 +53,8 @@ export default class FirTree implements IComponent {
 
         elem = new THREE.Mesh( componentObjectMatrix, material );
 
-        let edges:THREE.EdgesHelper;
+        //TODO: исправить any
+        let edges:THREE.EdgesHelper|any;
         edges = new THREE.EdgesHelper(elem, 0x0a541a);
         edges.material.linewidth = 24;
 

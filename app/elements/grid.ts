@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {Game, IComponent} from '../game/game';
 
-export default class Grid implements IComponent {
+export class Grid implements IComponent {
 
     public grid:any;
 

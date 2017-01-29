@@ -52,7 +52,7 @@ export default class Cloud implements IComponent {
             }
 
             let buffer:number = 5;
-            let elem:THREE.Mesh = new THREE.Mesh( geometry, material )
+            let elem:THREE.Mesh | THREE.Geometry| THREE.BufferGeometry | any = new THREE.Mesh( geometry, material )
 
             if (i !== 1 || j !== 1){
                 circleIndex++;

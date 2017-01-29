@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run server-dev-watch",
+    "server": "cross-env NODE_ENV=development webpack --config webpack.config.js --progress --colors --display-error-details",
     "server-watch": "cross-env NODE_ENV=development webpack --config webpack.config.js --progress --colors --watch --display-error-details",
-    "server-dev": "cross-env NODE_ENV=development webpack-dev-server --progress --colors",
-    "server-dev-watch": "cross-env NODE_ENV=development webpack-dev-server --progress --colors --watch  --display-error-details",
+    "server-dev": "cross-env NODE_ENV=development webpack-dev-server --progress --colors --display-error-details",
+    "server-dev-watch": "cross-env NODE_ENV=development webpack-dev-server --progress --colors --watch --display-error-details",
     "build-dev": "cross-env NODE_ENV=development webpack-dev-server --progress",
     "build-server": "cross-env NODE_ENV=development webpack --progress --colors",
     "build-production": "cross-env NODE_ENV=production webpack --progress",
@@ -18,7 +19,8 @@
   "devDependencies": {
     "@types/es6-shim": "^0.31.32",
     "@types/node": "^6.0.51",
-    "@types/three": "0.0.26",
+    "@types/three": "^0.83.1",
+    "bourbon": "^4.2.7",
     "cross-env": "^3.1.4",
     "es6-shim": "^0.35.1",
     "exports-loader": "^0.6.3",
@@ -43,7 +45,7 @@
     "webpack-typescript": "^0.5.6"
   },
   "dependencies": {
-    "three": "^0.81.0",
+    "three": "^0.83.0",
     "underscore": "^1.8.3"
   }
 }

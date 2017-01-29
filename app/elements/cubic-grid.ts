@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {Game, IComponent} from '../game/game';
 
-export default class CubicGrid implements IComponent {
+export class CubicGrid implements IComponent {
 	
 	private mesh : THREE.Mesh;
 

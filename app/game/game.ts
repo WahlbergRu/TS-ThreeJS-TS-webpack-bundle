@@ -9,8 +9,14 @@ export interface IComponent {
 
 export class Game{
 
-    public settings:any = {};
-     
+    private _settings:any;
+    public get settings():any {
+        return this._settings;
+    }
+    public set settings(settings:any) {
+        this._settings = settings;
+    }
+
     public static camera:THREE.Camera;
     public static scene;
     public static renderer;
@@ -20,11 +26,11 @@ export class Game{
         this.settings = settings;
 
         //Scene
-        this.scene = new THREE.Scene()
+        this.scene = new THREE.Scene();
 
         //Camera
         let aspect = window.innerWidth / window.innerHeight;
-        let d = this.settings.camera.d;
+        let d = this._settings.camera.d;
         this.camera = new THREE.OrthographicCamera( - d * aspect, d * aspect, d, - d, 1, 1000 );
         this.camera.position.set( d * 8, d * 8, d * 8 ); // all components equal
         this.camera.lookAt( this.scene.position ); // or the origin
@@ -60,7 +66,7 @@ export class Game{
         var cstr = Component.prototype.constructor.toString();
         var key = cstr.substring(9, cstr.indexOf('('));
         if (component.add){
-            component.add(this.settings);
+            component.add(this._settings);
         }
 
         this.components[key] = component;

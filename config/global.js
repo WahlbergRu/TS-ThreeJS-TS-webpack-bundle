@@ -31,7 +31,7 @@ module.exports = function(_path) {
 
         // Небольшие настройки связанные с тем, где искать сторонние библиотеки
         resolve: {
-            extensions: ['', '.js'],
+            extensions: ['', '.js', '.ts'],
             modulesDirectories: ['node_modules'],
             // Алиасы - очень важный инструмент для определения области видимости ex. require('_modules/test/index')
             alias: {
@@ -48,21 +48,27 @@ module.exports = function(_path) {
         module: {
             loaders: [
                 {
+                    test: /\.ts?$/,
+                    loader: 'ts-loader'
+                },
+                {
                     // Row loader to load html as inline templates.
                     test: /\.html$/,
                     loader: 'raw',
                     exclude: '/node_modules/'
                 },
+                {
+                    test: /\.scss$/,
+                    loaders: ["style-loader", "css-loader", "sass-loader"]
+                },
                 { test: /\.jade$/, loader: 'jade-loader' },
                 { test: /\.(css|ttf|eot|woff|woff2|png|ico|jpg|jpeg|gif|svg)$/i, loaders: ['file?context=' + rootAssetPath + '&name=assets/static/[ext]/[name].[hash].[ext]'] },
-                { test: /\.styl$/, loader: TextPlugin.extract('style-loader', 'css-loader!autoprefixer-loader?browsers=last 5 version!stylus-loader') }
             ]
         },
 
         // загружаем плагины
         plugins: [
             new webpack.optimize.CommonsChunkPlugin('vendors', 'assets/js/vendors.[hash].js'),
-            new TextPlugin('assets/css/[name].[hash].css'),
             new Manifest(path.join(_path + '/config', 'manifest.json'), {
                 rootAssetPath: rootAssetPath
             }),
@@ -72,7 +78,6 @@ module.exports = function(_path) {
                 chunks: ['application', 'vendors'],
                 template: path.join(_path, 'app', 'index.ejs'),
                 baseHref: '/',
-                inject: 'body',
             })
         ]
     }

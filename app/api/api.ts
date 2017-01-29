@@ -1,6 +1,5 @@
 export class Api {
     public static request(obj){
-        console.log(obj)
         return new Promise((resolve, reject) =>{
             if (!obj) reject(new Error('Haven\'t setting'));
 
