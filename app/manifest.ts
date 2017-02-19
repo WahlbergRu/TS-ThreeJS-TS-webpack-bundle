@@ -1,8 +1,8 @@
 import {Game}  from './game/game';
-import {Api} from './api/api'
+// import {Api} from './api/api'
 
-import {CubicGrid} from './elements/cubic-grid';
-import {Grid}      from './elements/grid';
+// import {CubicGrid} from './elements/cubic-grid';
+// import {Grid}      from './elements/grid';
 
 // var css = require("!loader!sass-loader!./index.scss");
 
@@ -34,6 +34,8 @@ import {Grid}      from './elements/grid';
 //     }
 // );
 
+let Core = new Game;
+
 window.onload = function() {
 
     let settings  = {
@@ -41,12 +43,11 @@ window.onload = function() {
             d: 50
         }
     }
+    // main logic/render loop
+    function animation() {
+        window.requestAnimationFrame( animation );
+        Core.update();
+    }
 
-    Game.init(settings);
-
-    // Game.component(Cloud);
-    // Game.component(FirTree);
-    Game.component(CubicGrid);
-    Game.component(Grid);
-
+    Core.init(settings);
 };

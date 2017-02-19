@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+import {CubicGrid} from "../elements/cubic-grid";
+import {Grid} from "../elements/grid";
 
 export interface IComponentClass {
     new (): IComponent;
@@ -17,11 +19,34 @@ export class Game{
         this._settings = settings;
     }
 
-    public static camera:THREE.Camera;
-    public static scene;
-    public static renderer;
+
+    public camera:THREE.Camera;
+    public scene;
+    public renderer;
+
+    //Render logic
+    public animation(){
+        window.requestAnimationFrame( this.animation );
+        this.update();
+    }
+
+    public grid(){
+
+        let cubicGrid = new CubicGrid();
+        console.log(cubicGrid.figure);
+
+
+
+        // this.components();
+
+        // scene.add( this.cube )
+        // Core.component(Cloud);
+        // Core.component(FirTree);
+        // Core.component(figures);
+        // Core.component(Grid);
+    }
         
-    public static init(settings){
+    public init(settings:any){
         //Set settings parameters
         this.settings = settings;
 
@@ -54,17 +79,17 @@ export class Game{
         this.renderer.shadowMap.renderReverseSided = false;
 
         document.body.appendChild( this.renderer.domElement ) ;
-        animation();   
+        this.animation();
     } 
     
-    private static components = {};
-    public static component(Component: IComponentClass) {
-        var component:any = new Component();
+    private components = {};
+    public component(Component: IComponentClass) {
+        let component:any = new Component();
 
         console.log(component);
         // get the name of the class
-        var cstr = Component.prototype.constructor.toString();
-        var key = cstr.substring(9, cstr.indexOf('('));
+        let cstr = Component.prototype.constructor.toString();
+        let key = cstr.substring(9, cstr.indexOf('('));
         if (component.add){
             component.add(this._settings);
         }
@@ -72,18 +97,12 @@ export class Game{
         this.components[key] = component;
     } 
     
-    public static update(){
-        for (var prop in this.components){
-            var component = this.components[prop];
+    public update(){
+        for (let prop in this.components){
+            let component = this.components[prop];
             component.update();
         }
         this.renderer.render( this.scene, this.camera);   
     }
-}
-
-// main logic/render loop
-function animation() {
-    window.requestAnimationFrame( animation );
-    Game.update();
 }
 

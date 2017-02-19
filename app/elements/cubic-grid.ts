@@ -1,31 +1,34 @@
 import * as THREE from 'three';
-import {Game, IComponent} from '../game/game';
 
-export class CubicGrid implements IComponent {
+export class CubicGrid {
 	
-	private mesh : THREE.Mesh;
+    private _figure: THREE.Mesh;
+
+    public get figure():THREE.Mesh{
+        return this._figure;
+    }
+
+    public set figure(figure:THREE.Mesh){
+        this._figure = figure;
+    }
 
 	constructor() {
 
-        var geometry,
+        let geometry,
             material,
-            cube,
             mapSize = 30;
 
         for (let i = 0, lenX = mapSize; i < lenX; i++) {
             for (let j = 0, lenY = mapSize; j < lenY; j++) {
                 geometry = new THREE.BoxBufferGeometry(10, 0, 10);
                 material = new THREE.MeshLambertMaterial({});
-                cube = new THREE.Mesh(geometry, material);
-                cube.position.x = i*10-mapSize/2*10;
-                cube.position.y = -10;
-                cube.position.z = j*10-mapSize/2*10;
-                Game.scene.add( cube );
+                this.figure = new THREE.Mesh(geometry, material);
+                this.figure.position.x = i*10-mapSize/2*10;
+                this.figure.position.y = -10;
+                this.figure.position.z = j*10-mapSize/2*10;
             }
         }
 
 	}
-    
-	public update() {}
 }
 

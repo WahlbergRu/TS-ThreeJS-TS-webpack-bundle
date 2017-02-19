@@ -8,11 +8,11 @@ module.exports = function(_path) {
     return {
         context: _path,
         debug: true,
-        devtool: 'eval',
+        devtool: 'source-map',
         devServer: {
             contentBase: './dist',
             info: true,
-            hot: false,
+            hot: true,
             inline: true
         }
     }

@@ -2,22 +2,24 @@ import * as THREE from 'three';
 
 export class HeightMap{
 
+    public plane: THREE.Plane;
+
     constructor(){
         // terrain
-        let img = new Image();
-        let plane;
+        let img: any = new Image();
 
-        img.onload = function () {
+        img.onload = () => {
+
             let data = this.getHeightData(img);
 
-            // plane
-            plane = new THREE.Plane(100, 100, 127, 127);
+            console.log(data);
 
-            for (let i = 0, l = plane.vertices.length; i < l; i++) {
-                plane.vertices[i].position.z = data[i];
-            }
-
-            // Что это за хуйня? Оо  - PLANE
+            // // plane
+            // this.plane = new THREE.Plane(100, 100, 127, 127);
+            //
+            // for (let i = 0, l = this.plane.vertices.length; i < l; i++) {
+            //     this.plane.vertices[i].position.z = data[i];
+            // }
 
         };
 
@@ -25,7 +27,7 @@ export class HeightMap{
 
     }
 
-    public getHeightData(img) {
+    public getHeightData(img:HTMLImageElement) {
         let canvas = document.createElement('canvas');
         canvas.width = 128;
         canvas.height = 128;
@@ -39,8 +41,7 @@ export class HeightMap{
             data[i] = 0
         }
 
-        let imgd = context.getImageData(0, 0, 128, 128);
-        let pix = imgd.data;
+        let pix = context.getImageData(0, 0, 128, 128).data;
 
         let j = 0;
         for (let i = 0, n = pix.length; i < n; i += (4)) {
