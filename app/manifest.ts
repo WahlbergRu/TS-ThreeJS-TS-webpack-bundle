@@ -1,3 +1,5 @@
+const styles = require("!style-loader!css-loader!sass-loader!./index.scss");
+
 import {Game}  from './game/game';
 // import {Api} from './api/api'
 
@@ -34,8 +36,6 @@ import {Game}  from './game/game';
 //     }
 // );
 
-let Core = new Game;
-
 window.onload = function() {
 
     let settings  = {
@@ -43,11 +43,7 @@ window.onload = function() {
             d: 50
         }
     }
-    // main logic/render loop
-    function animation() {
-        window.requestAnimationFrame( animation );
-        Core.update();
-    }
 
+    let Core = new Game;
     Core.init(settings);
 };

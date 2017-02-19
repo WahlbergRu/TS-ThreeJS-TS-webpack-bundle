@@ -26,7 +26,7 @@ export class Game{
 
     //Render logic
     public animation(){
-        window.requestAnimationFrame( this.animation );
+        window.requestAnimationFrame( ()=>{return this.animation} );
         this.update();
     }
 
@@ -34,9 +34,6 @@ export class Game{
 
         let cubicGrid = new CubicGrid();
         console.log(cubicGrid.figure);
-
-
-
         // this.components();
 
         // scene.add( this.cube )
@@ -49,7 +46,6 @@ export class Game{
     public init(settings:any){
         //Set settings parameters
         this.settings = settings;
-
         //Scene
         this.scene = new THREE.Scene();
 
@@ -102,7 +98,7 @@ export class Game{
             let component = this.components[prop];
             component.update();
         }
-        this.renderer.render( this.scene, this.camera);   
+        this.renderer.render( this.scene, this.camera);
     }
 }
 

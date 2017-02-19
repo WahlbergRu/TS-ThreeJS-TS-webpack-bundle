@@ -3,16 +3,16 @@
  */
 'use strict'
 
-var path        = require('path');
-var webpack     = require('webpack');
-var Manifest    = require('manifest-revision-webpack-plugin');
-var TextPlugin  = require('extract-text-webpack-plugin');
-var HtmlWebpackPlugin  = require('html-webpack-plugin');
+const path        = require('path');
+const webpack     = require('webpack');
+const Manifest    = require('manifest-revision-webpack-plugin');
+const TextPlugin  = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin  = require('html-webpack-plugin');
 
 module.exports = function(_path) {
     //define local variables
-    var dependencies  = Object.keys(require(_path + '/package').dependencies);
-    var rootAssetPath = _path + 'app';
+    let dependencies  = Object.keys(require(_path + '/package').dependencies);
+    let rootAssetPath = _path + 'app';
 
     return {
         // точки входа
@@ -30,7 +30,7 @@ module.exports = function(_path) {
 
         // Небольшие настройки связанные с тем, где искать сторонние библиотеки
         resolve: {
-            extensions: ['', '.webpack.js', '.web.js', '.ts', '.js']
+            extensions: ['', '.webpack.js', '.web.js', '.ts', '.js', '.scss', '.css']
         },
         // Настройка загрузчиков, они выполняют роль обработчика исходного файла в конечный
         module: {
@@ -56,8 +56,12 @@ module.exports = function(_path) {
                 {
                     test: /\.json?$/,
                     loader: 'json-loader'
+                },
+                {
+                    test: /\.scss$/,
+                    loaders: ["style-loader", "css-loader", "sass-loader"]
                 }
-            ]
+            ],
         },
 
         target: 'web',
