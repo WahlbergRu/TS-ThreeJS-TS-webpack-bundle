@@ -37,13 +37,12 @@ import {Game}  from './game/game';
 // );
 
 window.onload = function() {
-
-    let settings  = {
+    console.log('init');
+    let Core = new Game();
+    Core.settings = {
         camera: {
             d: 50
         }
     };
-
-    let Core = new Game;
-    Core.init(settings);
+    Core.init();
 };

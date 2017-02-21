@@ -1,7 +1,8 @@
 import * as THREE from 'three';
-import {Game, IComponent} from '../game/game';
 
-export class Grid implements IComponent {
+export class Grid {
+
+    constructor() {}
 
     private _figure: THREE.Mesh;
 
@@ -12,8 +13,6 @@ export class Grid implements IComponent {
     public set figure(figure:THREE.Mesh){
         this._figure = figure;
     }
-
-	constructor() {}
 
 	public addGeometry(settings){
         var geometry = new THREE.PlaneBufferGeometry( settings.camera.d * 8, settings.camera.d * 8, settings.camera.d * 2, settings.camera.d * 2 );
@@ -26,7 +25,5 @@ export class Grid implements IComponent {
         this.figure.material.depthTest = false;
     }
 
-	public update() {
-    }
 }
 
