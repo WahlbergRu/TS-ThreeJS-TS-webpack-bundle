@@ -1,4 +1,4 @@
-const styles = require("!style-loader!css-loader!sass-loader!./index.scss");
+require("!style-loader!css-loader!sass-loader!./index.scss");
 
 import {Game}  from './game/game';
 // import {Api} from './api/api'
@@ -42,7 +42,7 @@ window.onload = function() {
         camera: {
             d: 50
         }
-    }
+    };
 
     let Core = new Game;
     Core.init(settings);

@@ -5,7 +5,8 @@
     "experimentalDecorators": true,
     "module": "commonjs",
     "types":[
-      "es6-shim"
+      "es6-shim",
+      "node"
     ],
     "sourceMap": true,
     "target": "es5",
