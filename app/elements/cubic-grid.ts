@@ -28,6 +28,7 @@ export class CubicGrid {
                 this.figure.position.z = j*10-mapSize/2*10;
             }
         }
+        console.log(this.figure);
 
 	}
 }

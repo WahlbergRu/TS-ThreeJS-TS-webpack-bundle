@@ -15,8 +15,8 @@ export class Grid {
     }
 
 	public addGeometry(settings){
-        var geometry = new THREE.PlaneBufferGeometry( settings.camera.d * 8, settings.camera.d * 8, settings.camera.d * 2, settings.camera.d * 2 );
-        var material = new THREE.MeshBasicMaterial( { wireframe: true, opacity: 0.15, transparent: true } );
+        let geometry = new THREE.PlaneBufferGeometry( settings.camera.d * 8, settings.camera.d * 8, settings.camera.d * 2, settings.camera.d * 2 );
+        let material = new THREE.MeshBasicMaterial( { wireframe: true, opacity: 0.15, transparent: true } );
         this.figure = new THREE.Mesh( geometry, material );
         this.figure.rotation.order = 'YXZ';
         this.figure.rotation.y = - Math.PI / 2;

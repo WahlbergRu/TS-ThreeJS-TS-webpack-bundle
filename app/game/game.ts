@@ -20,11 +20,14 @@ export class Game{
 
     public grid(){
         let grid = new Grid();
+        grid.addGeometry(this.settings);
+        console.log(grid.figure);
         this.scene.add( grid.figure );
     }
 
     public cubicGrid(){
         let cubicGrid = new CubicGrid();
+        console.log(cubicGrid.figure);
         this.scene.add( cubicGrid.figure );
     }
         
@@ -59,7 +62,6 @@ export class Game{
         this.modelObseverable();
 
         console.log('animation - call')
-        this.animation();
 
     }
 
@@ -67,12 +69,12 @@ export class Game{
         this.cubicGrid();
         this.grid();
 
+        this.animation();
         console.log(this.scene);
     }
 
     //Render logic
     public animation(){
-        console.log('tick');
         let self = this;
         window.requestAnimationFrame(self.animation);
         this.renderer.render( this.scene, this.camera);

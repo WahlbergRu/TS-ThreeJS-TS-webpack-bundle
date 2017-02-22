@@ -68,7 +68,7 @@ module.exports = function(_path) {
 
         // загружаем плагины
         plugins: [
-            new webpack.optimize.CommonsChunkPlugin('vendors', 'assets/js/vendors.[hash].js'),
+            new webpack.optimize.CommonsChunkPlugin('vendors', 'dist/assets/js/vendors.[hash].js'),
             new HtmlWebpackPlugin({
                 // Required
                 inject: false,
@@ -85,6 +85,7 @@ module.exports = function(_path) {
                         content: 'true RPG'
                     }
                 ],
+                filename: 'dist/index.html',
                 mobile: true,
                 inlineManifestWebpackName: 'webpackManifest',
                 scripts: [],
