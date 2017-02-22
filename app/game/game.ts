@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import {CubicGrid} from "../elements/cubic-grid";
 import {Grid} from "../elements/grid";
+import {HeightMap} from "../editor/heightmap";
 
 export class Game{
 
@@ -21,14 +22,18 @@ export class Game{
     public grid(){
         let grid = new Grid();
         grid.addGeometry(this.settings);
-        console.log(grid.figure);
         this.scene.add( grid.figure );
     }
 
     public cubicGrid(){
         let cubicGrid = new CubicGrid();
-        console.log(cubicGrid.figure);
+        cubicGrid.addGeometry(this.settings);
         this.scene.add( cubicGrid.figure );
+    }
+
+    public heightMap(){
+        let heightMap = new HeightMap();
+        console.log(heightMap)
     }
         
     public init(){
@@ -68,6 +73,7 @@ export class Game{
     public modelObseverable(){
         this.cubicGrid();
         this.grid();
+        this.heightMap();
 
         this.animation();
         console.log(this.scene);

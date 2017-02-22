@@ -8,6 +8,8 @@ export class HeightMap{
         // terrain
         let img: any = new Image();
 
+        img.src = require("../assets/images/heightmap/heightmap_128.jpg");
+
         img.onload = () => {
 
             let data = this.getHeightData(img);
@@ -20,10 +22,10 @@ export class HeightMap{
             // for (let i = 0, l = this.plane.vertices.length; i < l; i++) {
             //     this.plane.vertices[i].position.z = data[i];
             // }
+            return data;
 
         };
 
-        img.src = require("./assets/images/heightmap/heightmap_128.jpg");
 
     }
 
@@ -33,7 +35,8 @@ export class HeightMap{
         canvas.height = 128;
         let context = canvas.getContext('2d');
 
-        let size = 128 * 128, data = new Float32Array(size);
+        let size = 128 * 128,
+            data = new Float32Array(size);
 
         context.drawImage(img, 0, 0);
 

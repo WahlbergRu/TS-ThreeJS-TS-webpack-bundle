@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 
 export class CubicGrid {
-	
+    constructor() {}
+
     private _figure: THREE.Mesh;
 
     public get figure():THREE.Mesh{
@@ -12,7 +13,7 @@ export class CubicGrid {
         this._figure = figure;
     }
 
-	constructor() {
+    public addGeometry(settings) {
 
         let geometry,
             material,
