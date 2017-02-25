@@ -8,7 +8,7 @@ module.exports = function(_path) {
     return {
         context: _path,
         debug: true,
-        devtool: 'source-map',
+        devtool: 'eval',
         devServer: {
             contentBase: './dist',
             info: true,

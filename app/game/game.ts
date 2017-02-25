@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import {CubicGrid} from "../elements/cubic-grid";
 import {Grid} from "../elements/grid";
 import {HeightMap} from "../editor/heightmap";
+import {IGEOJson} from "../types";
 
 export class Game{
 
@@ -33,7 +34,34 @@ export class Game{
 
     public heightMap(){
         let heightMap = new HeightMap();
-        console.log(heightMap)
+
+        // terrain
+        let img: any = new Image();
+        //TODO: сделать добавление без рекваер
+        img.src = require("../assets/images/heightmap/heightmap_128.jpg");
+
+        heightMap
+            .parseImageToGeo(img)
+            .then((res:Array<Array<number>>) => {
+                let geoJsonObject:IGEOJson = {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [
+                            res
+                        ]
+                    },
+                    "properties": {
+                        "name": "Ocean"
+                    }
+                };
+                console.log(res);
+                return res;
+            })
+            .catch((err) => {
+                console.log(err)
+            });
+
     }
         
     public init(){
@@ -65,9 +93,6 @@ export class Game{
 
         document.body.appendChild( this.renderer.domElement ) ;
         this.modelObseverable();
-
-        console.log('animation - call')
-
     }
 
     public modelObseverable(){
@@ -75,14 +100,17 @@ export class Game{
         this.grid();
         this.heightMap();
 
+
         this.animation();
-        console.log(this.scene);
     }
 
     //Render logic
     public animation(){
-        let self = this;
-        window.requestAnimationFrame(self.animation);
+        function callbackAnimation(context){
+            context.animation();
+        }
+
+        window.requestAnimationFrame(callbackAnimation.bind(null, this));
         this.renderer.render( this.scene, this.camera);
     }
 

@@ -1,58 +1,37 @@
-import * as THREE from 'three';
-
 export class HeightMap{
 
-    public plane: THREE.Plane;
+    constructor(){}
 
-    constructor(){
-        // terrain
-        let img: any = new Image();
-
-        img.src = require("../assets/images/heightmap/heightmap_128.jpg");
-
-        img.onload = () => {
-
-            let data = this.getHeightData(img);
-
-            console.log(data);
-
-            // // plane
-            // this.plane = new THREE.Plane(100, 100, 127, 127);
-            //
-            // for (let i = 0, l = this.plane.vertices.length; i < l; i++) {
-            //     this.plane.vertices[i].position.z = data[i];
-            // }
-            return data;
-
-        };
-
-
+    public parseImageToGeo(img:HTMLImageElement){
+        return new Promise((resolve, reject) => {
+            img.onload = () => {
+                let data = this.getGeoHeight(img);
+                resolve(data);
+            };
+        });
     }
 
-    public getHeightData(img:HTMLImageElement) {
+    /**
+     *
+     * @param img
+     * @returns {Array of Array of numbers}
+     */
+    public getGeoHeight(img:HTMLImageElement):Array<Array<number>> {
         let canvas = document.createElement('canvas');
-        canvas.width = 128;
-        canvas.height = 128;
+        canvas.width  = img.width;
+        canvas.height = img.height;
+
         let context = canvas.getContext('2d');
+            context.drawImage(img, 0, 0);
 
-        let size = 128 * 128,
-            data = new Float32Array(size);
+        let pix = context.getImageData(0, 0, img.width, img.height).data,
+            coordinates = [];
 
-        context.drawImage(img, 0, 0);
-
-        for (let i = 0; i < size; i++) {
-            data[i] = 0
-        }
-
-        let pix = context.getImageData(0, 0, 128, 128).data;
-
-        let j = 0;
         for (let i = 0, n = pix.length; i < n; i += (4)) {
-            let all = pix[i] + pix[i + 1] + pix[i + 2];
-            data[j++] = all / 30;
+            coordinates.push([pix[i], pix[i+1], pix[i+2]]);
         }
 
-        return data;
+        return coordinates;
     }
 
 }
