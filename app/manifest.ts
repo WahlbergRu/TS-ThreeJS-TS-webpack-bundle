@@ -15,26 +15,7 @@ import {Game}  from './game/game';
 // import FirTree from './resources/tree/fir-tree';
 
 
-// var dataRequest = {
-//     url: 'example/data-names.json',
-//     method: 'GET',
-//     statusAcceptence: [200, 201, 204],
-//     headers: [
-//         {
-//             name: 'Content-Type',
-//             value: 'application/json'
-//         }
-//     ]
-// };
-//
-// Api.request(dataRequest).then(
-//     function(res){
-//         console.log(res);
-//     },
-//     function(err){
-//         console.log(err);
-//     }
-// );
+
 
 window.onload = function() {
     console.log('init');

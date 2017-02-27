@@ -3,6 +3,7 @@ import {CubicGrid} from "../elements/cubic-grid";
 import {Grid} from "../elements/grid";
 import {HeightMap} from "../editor/heightmap";
 import {IGEOJson} from "../types";
+import {Api} from "../api/api";
 
 export class Game{
 
@@ -55,11 +56,56 @@ export class Game{
                         "name": "Ocean"
                     }
                 };
-                console.log(res);
-                return res;
+
+                // console.log(vertices);
+
+                let holes = [];
+                let triangles, mesh;
+                let geometry = new THREE.PlaneGeometry(img.width, img.height, img.width, img.height);
+                let material = new THREE.MeshPhongMaterial( {
+                    color: 0x555,
+                    shading: THREE.FlatShading
+                } );
+
+                // for( let i = 0; i < res.length; i++ ){
+                //     geometry.faces.push( new THREE.Face3( res[i][0], res[i][1], res[i][2] ));
+                // }
+
+                mesh = new THREE.Mesh( geometry, material );
+
+                mesh.geometry.rotateX(Math.PI/2);
+
+                console.log(mesh);
+
+                // geometry.vertices = vertices;
+
+                // console.log(vertices);
+
+                // triangles = THREE.ShapeUtils.triangulateShape( vertices, holes );
+                //
+                //
+                // for( let i = 0; i < triangles.length; i++ ){
+                //     geometry.faces.push( new THREE.Face3( triangles[i][0], triangles[i][1], triangles[i][2] ));
+                // }
+                //
+                // mesh = new THREE.Mesh( geometry, material );
+                //
+                //
+                this.scene.add(mesh);
+                // console.log(mesh);
+
+
+                return geoJsonObject;
+            })
+            .then((geoObj)=>{
+                let options = {body: geoObj};
+                return new Api().points(options);
+            })
+            .then((response)=>{
+                console.log(response);
             })
             .catch((err) => {
-                console.log(err)
+                console.log(err);
             });
 
     }
@@ -96,8 +142,8 @@ export class Game{
     }
 
     public modelObseverable(){
-        this.cubicGrid();
-        this.grid();
+        // this.cubicGrid();
+        // this.grid();
         this.heightMap();
 
 

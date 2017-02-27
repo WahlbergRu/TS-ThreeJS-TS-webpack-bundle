@@ -27,6 +27,7 @@ export class HeightMap{
         let pix = context.getImageData(0, 0, img.width, img.height).data,
             coordinates = [];
 
+        //+- (4) потому png в формате rgba.
         for (let i = 0, n = pix.length; i < n; i += (4)) {
             coordinates.push([pix[i], pix[i+1], pix[i+2]]);
         }
