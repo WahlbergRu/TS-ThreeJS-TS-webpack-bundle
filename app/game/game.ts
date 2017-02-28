@@ -33,6 +33,9 @@ export class Game{
         this.scene.add( cubicGrid.figure );
     }
 
+    public axis(){
+    }
+
     public heightMap(){
         let heightMap = new HeightMap();
 
@@ -63,7 +66,7 @@ export class Game{
                 let triangles, mesh;
                 let geometry = new THREE.PlaneGeometry(img.width, img.height, img.width, img.height);
                 let material = new THREE.MeshPhongMaterial( {
-                    color: 0x555,
+                    color: 0xfff,
                     shading: THREE.FlatShading
                 } );
 
@@ -71,11 +74,29 @@ export class Game{
                 //     geometry.faces.push( new THREE.Face3( res[i][0], res[i][1], res[i][2] ));
                 // }
 
-                mesh = new THREE.Mesh( geometry, material );
+                // mesh = new THREE.Mesh( geometry, material );
 
-                mesh.geometry.rotateX(Math.PI/2);
+                // let geometry = new THREE.PlaneGeometry( 20, 20, 20, 20 );
+                // let material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
+                // let plane = new THREE.Mesh( geometry, material );
+                // this.scene.add( plane );
 
-                console.log(mesh);
+                let objectPG = THREE.SceneUtils.createMultiMaterialObject( geometry, [material] );
+
+
+                let parent = new THREE.Object3D();
+                objectPG.applyMatrix( new THREE.Matrix4().makeRotationX( - Math.PI / 2) );
+                parent.add(objectPG);
+
+                console.log(parent);
+                console.log(objectPG);
+                this.scene.add(parent);
+
+                // mesh.geometry.(Math.PI/2);
+
+                // mesh.geometry.rotation.y = - Math.PI / 2;
+                // mesh.geometry.rotation.x = - Math.PI / 2;
+
 
                 // geometry.vertices = vertices;
 
@@ -91,7 +112,7 @@ export class Game{
                 // mesh = new THREE.Mesh( geometry, material );
                 //
                 //
-                this.scene.add(mesh);
+                // this.scene.add(mesh);
                 // console.log(mesh);
 
 
@@ -117,12 +138,11 @@ export class Game{
         //Camera
         let aspect = window.innerWidth / window.innerHeight;
         let d = this._settings.camera.d;
-        console.log(d);
         this.camera = new THREE.OrthographicCamera( - d * aspect, d * aspect, d, - d, 1, 1000 );
         this.camera.position.set( d * 8, d * 8, d * 8 ); // all components equal
         this.camera.lookAt( this.scene.position ); // or the origin
 
-        let gridHelper = new THREE.GridHelper( 10, 10, 0x000000, 0x000000 );
+        let gridHelper = new THREE.GridHelper( 10 * d, 10 * d, 0xfff, 0xfff );
         this.scene.add( gridHelper );
 
         // light
@@ -145,6 +165,7 @@ export class Game{
         // this.cubicGrid();
         // this.grid();
         this.heightMap();
+        this.axis();
 
 
         this.animation();
