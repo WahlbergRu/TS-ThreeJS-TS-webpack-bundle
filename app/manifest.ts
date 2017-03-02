@@ -22,7 +22,7 @@ window.onload = function() {
     let Core = new Game();
     Core.settings = {
         camera: {
-            d: 50
+            d: 10
         }
     };
     Core.init();

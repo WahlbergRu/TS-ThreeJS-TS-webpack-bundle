@@ -42,11 +42,12 @@ export class Game{
         // terrain
         let img: any = new Image();
         //TODO: сделать добавление без рекваер
+        //TODO: вынести, смерджить с настройками
         img.src = require("../assets/images/heightmap/heightmap_128.jpg");
 
         heightMap
             .parseImageToGeo(img)
-            .then((res:Array<Array<number>>) => {
+            .then((res:number[][]) => {
                 let geoJsonObject:IGEOJson = {
                     "type": "Feature",
                     "geometry": {
@@ -64,57 +65,23 @@ export class Game{
 
                 let holes = [];
                 let triangles, mesh;
-                let geometry = new THREE.PlaneGeometry(img.width, img.height, img.width, img.height);
+                let geometry = new THREE.PlaneGeometry(img.width, img.height, img.width-1, img.height-1);
                 let material = new THREE.MeshPhongMaterial( {
                     color: 0xfff,
                     shading: THREE.FlatShading
                 } );
 
-                // for( let i = 0; i < res.length; i++ ){
-                //     geometry.faces.push( new THREE.Face3( res[i][0], res[i][1], res[i][2] ));
-                // }
-
-                // mesh = new THREE.Mesh( geometry, material );
-
-                // let geometry = new THREE.PlaneGeometry( 20, 20, 20, 20 );
-                // let material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
-                // let plane = new THREE.Mesh( geometry, material );
-                // this.scene.add( plane );
+                for( let i = 0; i < res.length; i++ ){
+                    geometry.vertices[i].setZ(res[i][2]/10);
+                }
 
                 let objectPG = THREE.SceneUtils.createMultiMaterialObject( geometry, [material] );
-
 
                 let parent = new THREE.Object3D();
                 objectPG.applyMatrix( new THREE.Matrix4().makeRotationX( - Math.PI / 2) );
                 parent.add(objectPG);
 
-                console.log(parent);
-                console.log(objectPG);
                 this.scene.add(parent);
-
-                // mesh.geometry.(Math.PI/2);
-
-                // mesh.geometry.rotation.y = - Math.PI / 2;
-                // mesh.geometry.rotation.x = - Math.PI / 2;
-
-
-                // geometry.vertices = vertices;
-
-                // console.log(vertices);
-
-                // triangles = THREE.ShapeUtils.triangulateShape( vertices, holes );
-                //
-                //
-                // for( let i = 0; i < triangles.length; i++ ){
-                //     geometry.faces.push( new THREE.Face3( triangles[i][0], triangles[i][1], triangles[i][2] ));
-                // }
-                //
-                // mesh = new THREE.Mesh( geometry, material );
-                //
-                //
-                // this.scene.add(mesh);
-                // console.log(mesh);
-
 
                 return geoJsonObject;
             })
