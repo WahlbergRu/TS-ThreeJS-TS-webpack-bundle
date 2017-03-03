@@ -71,6 +71,11 @@ export class Game{
                     shading: THREE.FlatShading
                 } );
 
+                let grid = new THREE.MeshPhongMaterial( {
+                    color: 0xfff,
+                    wireframe: true
+                } );
+
                 for( let i = 0; i < res.length; i++ ){
                     geometry.vertices[i].setZ(res[i][2]/10);
                 }
@@ -82,6 +87,37 @@ export class Game{
                 parent.add(objectPG);
 
                 this.scene.add(parent);
+
+                objectPG = THREE.SceneUtils.createMultiMaterialObject( geometry, [grid] );
+
+                parent = new THREE.Object3D();
+                objectPG.applyMatrix( new THREE.Matrix4().makeRotationX( - Math.PI / 2) );
+                parent.add(objectPG);
+
+                console.log(objectPG);
+
+                this.scene.add(parent);
+
+                //
+                // let size = img.width, step = 1;
+                //
+                // geometry = new THREE.Geometry();
+                // material = new THREE.LineBasicMaterial( { color: 0xcccccc, opacity: 0.2 } );
+                //
+                // for (let i = 0, len = size.length; i < len; i++) {
+                //     for (let j = 0, len2 = size.length; j < len2; j++) {
+                //         geometry.vertices.push( new THREE.Vector3( i  , 0, j   ));
+                //         geometry.vertices.push( new THREE.Vector3( i+1, 0, j   ));
+                //         geometry.vertices.push( new THREE.Vector3( i  , 0, j+1 ));
+                //         geometry.vertices.push( new THREE.Vector3( i+1, 0, j+1 ));
+                //     }
+                // }
+                //
+                // console.log(geometry)
+                //
+                // let line = new THREE.Line( geometry, material, THREE.LinePieces );
+                // this.scene.add( line );
+
 
                 return geoJsonObject;
             })
@@ -108,9 +144,6 @@ export class Game{
         this.camera = new THREE.OrthographicCamera( - d * aspect, d * aspect, d, - d, 1, 1000 );
         this.camera.position.set( d * 8, d * 8, d * 8 ); // all components equal
         this.camera.lookAt( this.scene.position ); // or the origin
-
-        let gridHelper = new THREE.GridHelper( 10 * d, 10 * d, 0xfff, 0xfff );
-        this.scene.add( gridHelper );
 
         // light
         let light:THREE.HemisphereLight = new THREE.HemisphereLight( 0x0000ff, 0x00ff00, 0.6 );
