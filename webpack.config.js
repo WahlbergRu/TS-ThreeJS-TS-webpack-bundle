@@ -1,13 +1,13 @@
 'use strict';
 
-var _ = require('lodash');
-var _configs = {
+const _ = require('lodash');
+const _configs = {
     global: require(__dirname + '/config/global'),
     production: require(__dirname + '/config/env/production'),
     development: require(__dirname + '/config/env/development')
 };
 
-var _load = function(environment) {
+const _load = function(environment) {
     // Проверяем окружение
     if (!environment) throw 'Can\'t find local environment variable via process.env.NODE_ENV';
     if (!_configs[environment]) throw 'Can\'t find environments see _config object';

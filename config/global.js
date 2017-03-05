@@ -8,6 +8,7 @@ const webpack     = require('webpack');
 const Manifest    = require('manifest-revision-webpack-plugin');
 const TextPlugin  = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin  = require('html-webpack-plugin');
+const OBJLoader   = require('three-obj-loader');
 
 module.exports = function(_path) {
     //define local variables
@@ -63,6 +64,10 @@ module.exports = function(_path) {
                 {
                     test: /\.ts?$/,
                     loader: 'ts-loader'
+                },
+                {
+                    test: /\.obj?$/,
+                    loader: 'obj-loader'
                 },
                 {
                     test: /\.json?$/,

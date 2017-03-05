@@ -8,3 +8,8 @@ export interface IGEOJson {
         name: string
     }
 }
+
+export interface HeightMapOptions{
+    color: string;
+    grid: boolean
+}

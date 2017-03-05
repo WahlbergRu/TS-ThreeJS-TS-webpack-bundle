@@ -1,12 +1,15 @@
 import * as THREE from 'three';
+import {OBJLoader} from '../objloader'
+
 import {CubicGrid} from "../elements/cubic-grid";
 import {Grid} from "../elements/grid";
+
 import {HeightMap} from "../editor/heightmap";
-import {IGEOJson} from "../types";
+
+import {IGEOJson, HeightMapOptions} from "../types";
 import {Api} from "../api/api";
 
 export class Game{
-
     //Set settings parameters
     private _settings:any;
     public get settings():any {
@@ -21,24 +24,22 @@ export class Game{
     public scene:THREE.Scene;
     public renderer:THREE.WebGLRenderer;
 
-    public grid(){
-        let grid = new Grid();
-        grid.addGeometry(this.settings);
-        this.scene.add( grid.figure );
-    }
+    // TODO: вынести в отдельный модуль
+    // public grid(){
+    //     let grid = new Grid();
+    //     grid.addGeometry(this.settings);
+    //     this.scene.add( grid.figure );
+    // }
+    //
+    // public cubicGrid(){
+    //     let cubicGrid = new CubicGrid();
+    //     cubicGrid.addGeometry(this.settings);
+    //     this.scene.add( cubicGrid.figure );
+    // }
 
-    public cubicGrid(){
-        let cubicGrid = new CubicGrid();
-        cubicGrid.addGeometry(this.settings);
-        this.scene.add( cubicGrid.figure );
-    }
+    public heightMap(options){
 
-    public axis(){
-    }
-
-    public heightMap(){
         let heightMap = new HeightMap();
-
         // terrain
         let img: any = new Image();
         //TODO: сделать добавление без рекваер
@@ -61,13 +62,13 @@ export class Game{
                     }
                 };
 
-                // console.log(vertices);
+                console.log(options)
 
                 let holes = [];
                 let triangles, mesh;
                 let geometry = new THREE.PlaneGeometry(img.width, img.height, img.width-1, img.height-1);
                 let material = new THREE.MeshPhongMaterial( {
-                    color: 0xfff,
+                    color: 'rgba(255, 255, 255)',
                     shading: THREE.FlatShading
                 } );
 
@@ -88,36 +89,13 @@ export class Game{
 
                 this.scene.add(parent);
 
-                objectPG = THREE.SceneUtils.createMultiMaterialObject( geometry, [grid] );
-
-                parent = new THREE.Object3D();
-                objectPG.applyMatrix( new THREE.Matrix4().makeRotationX( - Math.PI / 2) );
-                parent.add(objectPG);
-
-                console.log(objectPG);
-
-                this.scene.add(parent);
-
-                //
-                // let size = img.width, step = 1;
-                //
-                // geometry = new THREE.Geometry();
-                // material = new THREE.LineBasicMaterial( { color: 0xcccccc, opacity: 0.2 } );
-                //
-                // for (let i = 0, len = size.length; i < len; i++) {
-                //     for (let j = 0, len2 = size.length; j < len2; j++) {
-                //         geometry.vertices.push( new THREE.Vector3( i  , 0, j   ));
-                //         geometry.vertices.push( new THREE.Vector3( i+1, 0, j   ));
-                //         geometry.vertices.push( new THREE.Vector3( i  , 0, j+1 ));
-                //         geometry.vertices.push( new THREE.Vector3( i+1, 0, j+1 ));
-                //     }
-                // }
-                //
-                // console.log(geometry)
-                //
-                // let line = new THREE.Line( geometry, material, THREE.LinePieces );
-                // this.scene.add( line );
-
+                if (options.grid){
+                    objectPG = THREE.SceneUtils.createMultiMaterialObject( geometry, [grid] );
+                    parent = new THREE.Object3D();
+                    objectPG.applyMatrix( new THREE.Matrix4().makeRotationX( - Math.PI / 2) );
+                    parent.add(objectPG);
+                    this.scene.add(parent);
+                }
 
                 return geoJsonObject;
             })
@@ -133,7 +111,35 @@ export class Game{
             });
 
     }
-        
+
+    public testObj(){
+        let manager:THREE.LoadingManager = new THREE.LoadingManager();
+        manager.onProgress = function (item, loaded, total) {
+            console.log( item, loaded, total );
+        };
+
+        //TODO: добавить типизацию по-возможности
+        let loader:any = new OBJLoader( manager );
+
+        //TODO: избавиться от этого
+        loader.load( 'app/assets/models/deer.obj', (object:THREE.Object3D) => {
+            console.log(object);
+            object.traverse(( child ) => {
+
+                let material = new THREE.MeshPhongMaterial( {
+                    color: 'rgba(125, 40, 200)',
+                    shading: THREE.FlatShading
+                } );
+
+                if ( child instanceof THREE.Mesh ) {
+                    child.material = material;
+                }
+            });
+            object.scale.set(0.03, 0.03, 0.03);
+            this.scene.add( object );
+        });
+    }
+
     public init(){
         //Scene
         this.scene = new THREE.Scene();
@@ -159,15 +165,20 @@ export class Game{
 
         document.body.appendChild( this.renderer.domElement ) ;
         this.modelObseverable();
+
+    }
+
+    public map(){
+        let options:HeightMapOptions = {
+            color: "rgb(255,0,0)",
+            grid: false
+        };
+        this.heightMap(options);
     }
 
     public modelObseverable(){
-        // this.cubicGrid();
-        // this.grid();
-        this.heightMap();
-        this.axis();
-
-
+        this.map();
+        this.testObj();
         this.animation();
     }
 
@@ -182,4 +193,3 @@ export class Game{
     }
 
 }
-
